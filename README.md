@@ -6,43 +6,77 @@
 
 **集群特性：`TLS` 双向认证、`RBAC` 授权、多`Master`高可用、支持`Network Policy`**
 
-项目基于`Ubuntu 16.04/CentOS 7`，其他系统需要读者自行替换部分命令；你可能需要掌握基础`kubernetes` `docker` `linux shell` 知识，关于`ansible`建议阅读 [ansible超快入门](http://weiweidefeng.blog.51cto.com/1957995/1895261) 基本够用。
+项目基于`Ubuntu 16.04/CentOS 7`，需要了解基础`kubernetes` `docker` `linux` 知识，关于`ansible`建议阅读 [ansible超快入门](http://weiweidefeng.blog.51cto.com/1957995/1895261) 。
 
-请阅读[项目分支说明](branch.md)，欢迎提`Issues`和[PRs](docs/mixes/HowToContribute.md)参与维护项目。
+请阅读[项目TodoList](docs/mixes/TodoList.md)和[项目分支说明](docs/branch.md)，欢迎提[Issues](https://github.com/gjmzj/kubeasz/issues)和[PRs](docs/mixes/HowToContribute.md)参与维护项目。
 
-## 组件版本
+|组件|更新|支持|
+|:-|:-|:-|
+|OS|&nbsp;|Ubuntu 16.04+, CentOS 7|
+|k8s|v1.10.4|v1.8, v1.9, v1.10|
+|etcd|v3.3.6|v3.1, v3.2, v3.3|
+|docker|18.03.0-ce|17.*.*-ce, 18.*.*-ce|
+|network|&nbsp;|calico v3.0, flannel v0.10, kube-router|
 
-- kubernetes	v1.10.2
-- etcd		v3.3.4
-- docker	18.03.0-ce
-- calico	v3.0.6
-- flannel	v0.10.0  
-**注1：** 集群用到的所有二进制文件已打包好供下载 [https://pan.baidu.com/s/1c4RFaA](https://pan.baidu.com/s/1c4RFaA)  
-**注2：** 为提高集群网络插件安装的灵活性，使用`DaemonSet Pod`方式运行网络插件，目前支持`Calico` `flannel`可选
+-注：集群用到的所有二进制文件已打包好供下载 [https://pan.baidu.com/s/1c4RFaA](https://pan.baidu.com/s/1c4RFaA)  
 
 ## 快速指南
 
-单机快速体验k8s集群的测试、开发环境--[AllinOne部署](docs/quickStart.md)；在国内的网络环境下要比官方的minikube方便、简单很多。
+单机快速体验k8s集群的测试、开发环境--[AllinOne部署](docs/quickStart.md)
 
 ## 安装步骤
 
-- [规划集群和安装概览](docs/00-集群规划和基础参数设定.md)
-- [创建证书和安装准备](docs/01-创建CA证书和环境配置.md)
-- [安装etcd集群](docs/02-安装etcd集群.md)
-- [安装docker服务](docs/04-安装docker服务.md)
-- [安装kube-master节点](docs/05-安装kube-master节点.md)
-- [安装kube-node节点](docs/06-安装kube-node节点.md)
-- [安装calico网络](docs/07-安装calico网络组件.md)
-- [安装flannel网络](docs/07-安装flannel网络组件.md)
+<table border="0">
+    <tr>
+        <td><a href="docs/00-集群规划和基础参数设定.md">00-规划集群和安装概览</a></td>
+        <td><a href="docs/02-安装etcd集群.md">02-安装etcd集群</a></td>
+        <td><a href="docs/04-安装kube-master节点.md">04-安装master节点</a></td>
+        <td><a href="docs/06-安装网络组件.md">06-安装集群网络</a></td>
+    </tr>
+    <tr>
+        <td><a href="docs/01-创建CA证书和环境配置.md">01-创建证书和安装准备</a></td>
+        <td><a href="docs/03-安装docker服务.md">03-安装docker服务</a></td>
+        <td><a href="docs/05-安装kube-node节点.md">05-安装node节点</a></td>
+        <td><a href="docs/07-安装集群插件.md">07-安装集群插件</a></td>
+    </tr>
+</table>
 
 ## 使用指南
 
-- 常用插件部署  [DNS](docs/guide/kubedns.md) [dashboard](docs/guide/dashboard.md) [heapster](docs/guide/heapster.md) [ingress](docs/guide/ingress.md) [efk](docs/guide/efk.md) [harbor](docs/guide/harbor.md)
-- K8S 特性实验  [HPA](docs/guide/hpa.md) [NetworkPolicy](docs/guide/networkpolicy.md) [RollingUpdate](docs/guide/rollingupdateWithZeroDowntime.md)
-- 集群运维指南 [AddNode](docs/guide/op/AddNode.md) [AddMaster](docs/guide/op/AddMaster.md) [ChangeVip](docs/guide/op/ChangeVIP.md)
-- 应用部署实践
-
-请根据这份 [目录](docs/guide/index.md) 阅读你所感兴趣的内容，尚在更新中...
+<table border="0">
+    <tr>
+        <td><strong>常用插件</strong></td>
+        <td><a href="docs/guide/kubedns.md">kube-dns</a></td>
+        <td><a href="docs/guide/dashboard.md">dashboard</a></td>
+        <td><a href="docs/guide/metrics-server.md">metrics-server</a></td>
+        <td><a href="docs/guide/prometheus.md">prometheus</a></td>
+        <td><a href="docs/guide/index.md">更多...</a></td>
+    </tr>
+    <tr>
+        <td><strong>集群运维</strong></td>
+        <td><a href="docs/op/AddNode.md">增加node</a></td>
+        <td><a href="docs/op/AddMaster.md">增加master</a></td>
+        <td><a href="docs/op/ChangeVIP.md">修改VIP</a></td>
+        <td><a href="docs/op/upgrade.md">升级k8s</a></td>
+        <td><a href="docs/op/op-index.md">更多...</a></td>
+    </tr>
+    <tr>
+        <td><strong>特性实验</strong></td>
+        <td><a href="docs/guide/networkpolicy.md">NetworkPolicy</a></td>
+        <td><a href="docs/guide/rollingupdateWithZeroDowntime.md">RollingUpdate</a></td>
+        <td><a href="docs/guide/hpa.md">HPA</a></td>
+        <td><a href=""></a></td>
+        <td><a href=""></a></td>
+    </tr>
+    <tr>
+        <td><strong>其他</strong></td>
+        <td><a href="docs/guide/harbor.md">harbor部署</a></td>
+        <td><a href="docs/guide/ingress.md">ingress入口</a></td>
+        <td><a href="docs/guide/helm.md">helm工具</a></td>
+        <td><a href="docs/guide/jenkins.md">jenkins集成</a></td>
+        <td><a href=""></a></td>
+    </tr>
+</table>
 
 ## 沟通交流
 
@@ -55,4 +89,4 @@
 
 - [如何贡献](docs/mixes/HowToContribute.md)
 
-Copyright 2017 gjmzj (jmgaozz@163.com) Apache License 2.0，详情见 [LICENSE](LICENSE) 文件。
+Copyright 2017 gjmzj (jmgaozz@163.com) Apache License 2.0，详情见 [LICENSE](docs/mixes/LICENSE) 文件。

@@ -1,7 +1,7 @@
 down/*
 !down/download.sh
+!down/offline_images
 bin/*
-!bin/VERSION.md
 hosts
 *.crt
 *.pem

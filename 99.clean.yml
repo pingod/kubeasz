@@ -49,6 +49,11 @@
   - kube-node
   - new-node
   tasks:
+  - name: 清理kube-router相关
+    shell: "{{ bin_dir }}/docker run --privileged --net=host cloudnativelabs/kube-router --cleanup-config"
+    ignore_errors: true
+    when: "CLUSTER_NETWORK == 'kube-router'"
+
   - name: stop docker service
     shell: "systemctl stop docker"
     ignore_errors: true
@@ -70,11 +75,15 @@
     - "/etc/calico/"
     - "/var/run/calico/"
     - "/var/log/calico/"
+    - "/var/lib/cni/"
     - "/var/lib/docker/"
+    - "/var/lib/kube-router/"
     - "/var/run/docker/"
     - "/etc/systemd/system/calico-node.service"
     - "/etc/systemd/system/docker.service"
     - "/etc/systemd/system/docker.service.requires/"
+    - "/opt/kube/kube-system/"
+    ignore_errors: true
 
   - name: 清理 iptables
     shell: "iptables -F && iptables -X \
@@ -88,6 +97,8 @@
 	ip link del flannel.1; \
 	ip link del cni0; \
         ip link del mynet0; \
+	ip link del kube-bridge; \
+        ip link del dummy0; \
 	systemctl restart networking; \
 	systemctl restart network"
     ignore_errors: true
@@ -142,11 +153,8 @@
     lineinfile:
       dest: ~/.bashrc
       state: absent
-      regexp: 'kubeasz'
-
-  - name: 清理 kubectl 命令自动补全 
-    lineinfile:
-      dest: ~/.bashrc
-      state: absent
-      regexp: 'kubectl completion'
-
+      regexp: '{{ item }}'
+    with_items:
+    - 'kubeasz'
+    - 'helm'
+    - 'kubectl completion'
