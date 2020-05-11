@@ -9,7 +9,7 @@
 
 ## 讲解
 
-对照文件`/etc/ansible/roles/deploy/tasks/main.yml`，创建主要包括三个步骤：
+创建主要包括三个步骤：
 
 - 创建 group:read rbac 权限
 - 创建 read 用户证书和私钥
@@ -62,7 +62,6 @@ kubeconfig 为与apiserver交互使用的认证配置文件，如脚本步骤需
 ## 恢复 admin 权限
 
 - 可以恢复之前备份的`~/.kubeadmin`文件：`mv ~/.kube ~/.kuberead && mv ~/.kubeadmin ~/.kube`
-- 或者直接执行 `ansible-playbook /etc/ansible/01.prepare.yml -t create_kctl_cfg`
 
 ## 参考
 

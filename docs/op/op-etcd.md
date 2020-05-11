@@ -2,6 +2,7 @@
 
 Etcd 集群支持在线改变集群成员节点，可以增加、修改、删除成员节点；不过改变成员数量仍旧需要满足集群成员多数同意原则（quorum），另外请记住集群成员数量变化的影响：
 
+- 注意：如果etcd 集群有故障节点，务必先删除故障节点，然后添加新节点，[参考FAQ](https://etcd.io/docs/v3.4.0/faq/)
 - 增加 etcd 集群节点, 提高集群稳定性
 - 增加 etcd 集群节点, 提高集群读性能（所有节点数据一致，客户端可以从任意节点读取数据）
 - 增加 etcd 集群节点, 降低集群写性能（所有节点数据一致，每一次写入会需要所有节点数据同步）
@@ -19,7 +20,7 @@ $ ETCDCTL_API=3 etcdctl --write-out=table snapshot status backup.db
 
 ## etcd 集群节点操作
 
-首先确认配置 ssh 免密码登陆，然后执行 (假设待操作节点为 192.168.1.11)：
+首先确认配置 ssh 免密码登录，然后执行 (假设待操作节点为 192.168.1.11)：
 
 - 增加 etcd 节点：`$ easzctl add-etcd 192.168.1.11` (注意：增加 etcd 还需要根据提示输入集群内唯一的 NODE_NAME)
 - 删除 etcd 节点：`$ easzctl del-etcd 192.168.1.11`
@@ -27,7 +28,7 @@ $ ETCDCTL_API=3 etcdctl --write-out=table snapshot status backup.db
 ### 验证 etcd 集群
 
 ``` bash
-# 登陆任意etcd节点验证etcd集群状态
+# 登录任意etcd节点验证etcd集群状态
 $ export ETCDCTL_API=3 
 $ etcdctl member list
 

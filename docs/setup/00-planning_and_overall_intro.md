@@ -30,7 +30,7 @@
 
 + 推荐内存2G/硬盘30G以上
 + 最小化安装`Ubuntu 16.04 server`或者`CentOS 7 Minimal`
-+ 配置基础网络、更新源、SSH登陆等
++ 配置基础网络、更新源、SSH登录等
 
 ### 2.在每个节点安装依赖工具
 
@@ -63,13 +63,11 @@ apt-get install git python-pip -y
 # CentOS 7
 yum install git python-pip -y
 # pip安装ansible(国内如果安装太慢可以直接用pip阿里云加速)
-#pip install pip --upgrade
-#pip install ansible==2.6.12 netaddr==0.7.19
 pip install pip --upgrade -i https://mirrors.aliyun.com/pypi/simple/
-pip install ansible==2.6.12 netaddr==0.7.19 -i https://mirrors.aliyun.com/pypi/simple/
+pip install ansible==2.6.18 netaddr==0.7.19 -i https://mirrors.aliyun.com/pypi/simple/
 ```
 
-- 3.2 在ansible控制端配置免密码登陆
+- 3.2 在ansible控制端配置免密码登录
 
 ``` bash
 # 更安全 Ed25519 算法
@@ -86,7 +84,7 @@ ssh-copy-id $IPs #$IPs为所有节点地址包括自身，按照提示输入yes 
 - 4.1 下载二进制文件
 - 4.2 下载离线docker镜像
 
-推荐使用 easzup 脚本下载 4.0/4.1/4.2 所需文件；运行成功后，所有文件（kubeasz代码、二进制、离线镜像）均已整理好放入目录`/etc/ansilbe`
+推荐使用 easzup 脚本下载 4.0/4.1/4.2 所需文件；运行成功后，所有文件（kubeasz代码、二进制、离线镜像）均已整理好放入目录`/etc/ansible`
 
 ``` bash
 # 下载工具脚本easzup，举例使用kubeasz版本2.0.2

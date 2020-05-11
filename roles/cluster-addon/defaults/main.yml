@@ -4,7 +4,7 @@ dns_backend: "coredns"
 # 设置 dns svc ip (这里选用 SERVICE_CIDR 中第2个IP)
 CLUSTER_DNS_SVC_IP: "{{ SERVICE_CIDR | ipaddr('net') | ipaddr(2) | ipaddr('address') }}"
 kubednsVer: "1.14.13"
-corednsVer: "1.6.2"
+corednsVer: "1.6.6"
 kubedns_offline: "kubedns_{{ kubednsVer }}.tar"
 coredns_offline: "coredns_{{ corednsVer }}.tar"
 dns_offline: "{%- if dns_backend == 'coredns' -%} \
@@ -19,17 +19,17 @@ metricsVer: "v0.3.6"
 metricsserver_offline: "metrics-server_{{ metricsVer }}.tar"
 
 # dashboard 自动安装
-# 现阶段 dashboard 获取metrics仍旧依赖于heapster，因此需连带安装heapster
+# dashboard v2.x.x 不依赖于heapster
 dashboard_install: "yes"
-dashboardVer: "v1.10.1"
+dashboardVer: "v2.0.0-rc3"
 dashboard_offline: "dashboard_{{ dashboardVer }}.tar"
-heapsterVer: "v1.5.4"
-heapster_offline: "heapster_{{ heapsterVer }}.tar"
+dashboardMetricsScraperVer: "v1.0.3"
+metricsscraper_offline: "metrics-scraper_{{ dashboardMetricsScraperVer }}.tar"
 
 # ingress 自动安装，可选 "traefik" 和 "nginx-ingress"
 ingress_install: "yes"
 ingress_backend: "traefik"
-traefikVer: "v1.7.12"
+traefikVer: "v1.7.20"
 nginxingVer: "0.21.0"
 traefik_offline: "traefik_{{ traefikVer }}.tar"
 nginx_ingress_offline: "nginx_ingress_{{ nginxingVer }}.tar"
