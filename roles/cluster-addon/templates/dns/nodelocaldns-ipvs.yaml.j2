@@ -58,7 +58,7 @@ data:
         errors
         cache {
                 success 9984 30
-                denial 9984 5
+                denial 9984 15
         }
         reload
         loop
@@ -97,7 +97,7 @@ data:
         reload
         loop
         bind {{ LOCAL_DNS_CACHE }}
-        forward . __PILLAR__CLUSTER__DNS__
+        forward . __PILLAR__UPSTREAM__SERVERS__
         prometheus :9253
         }
 ---
