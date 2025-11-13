@@ -150,7 +150,7 @@ function new() {
 
     logger debug "set versions"
     # these variables were imported with eval and have the same name in ezdown
-    eval $(sed '/[ver|VER]=.*\./!d' ezdown)
+    eval $(sed '/V.[rR]=.*\./!d' ezdown)
     k8sVer=$(echo "$K8S_BIN_VER"|sed 's/v//g')
     registryMirror=true
 
@@ -166,11 +166,14 @@ function new() {
 	   -e "s/__pause__/$pauseVer/g" \
 	   -e "s/__dns_node_cache__/$dnsNodeCacheVer/g" \
 	   -e "s/__dashboard__/$dashboardVer/g" \
-	   -e "s/__dash_metrics__/$dashboardMetricsScraperVer/g" \
 	   -e "s/__local_path_provisioner__/$localpathProvisionerVer/g" \
 	   -e "s/__nfs_provisioner__/$nfsProvisionerVer/g" \
+	   -e "s/__openebs_ver__/$openebsVer/g" \
 	   -e "s/__prom_chart__/$promChartVer/g" \
+	   -e "s/__minio_chart__/$minioOperatorVer/g" \
 	   -e "s/__kubeapps_chart__/$kubeappsVer/g" \
+	   -e "s/__kubeblocks_ver__/$kubeblocksVer/g" \
+	   -e "s/__ingress_nginx_ver__/$ingressNginxVer/g" \
 	   -e "s/__harbor__/$HARBOR_VER/g" \
 	   -e "s/^ENABLE_MIRROR_REGISTRY.*$/ENABLE_MIRROR_REGISTRY: $registryMirror/g" \
 	   -e "s/__metrics__/$metricsVer/g" "clusters/$1/config.yml"
@@ -351,6 +354,9 @@ function add-master() {
     logger info "start to add a master node:$2 into cluster:$1"
     ansible-playbook -i "$BASE/clusters/$1/hosts" "$BASE/playbooks/23.addmaster.yml" -e "NODE_TO_ADD=$2" -e "@clusters/$1/config.yml"
 
+    logger info "re-setting /etc/hosts for all nodes"
+    ansible-playbook -i "$BASE/clusters/$1/hosts" "$BASE/playbooks/90.setup.yml" -t set_hosts -e "@clusters/$1/config.yml"
+
     logger info "reconfigure and restart 'kube-lb' service"
     ansible-playbook -i "$BASE/clusters/$1/hosts" "$BASE/playbooks/90.setup.yml" -t restart_kube-lb -e "@clusters/$1/config.yml"
 
@@ -414,6 +420,8 @@ function del-master() {
     # check if the deleting master exsited
     sed -n '/^\[kube_master/,/^\[kube_node/p' "$BASE/clusters/$1/hosts"|grep -E "^$2$|^$2 " || { logger error "master $2 not existed!"; return 2; }
 
+    NODE_NAME=$(bin/kubectl --kubeconfig="clusters/$1/kubectl.kubeconfig" get node -owide|grep " $2 "|awk '{print $1}')
+
     logger warn "start to delete the master:$2 from cluster:$1"
     ansible-playbook -i "$BASE/clusters/$1/hosts" "$BASE/playbooks/33.delmaster.yml" -e "NODE_TO_DEL=$2" -e "CLUSTER=$1" -e "@clusters/$1/config.yml"
 
@@ -425,6 +433,9 @@ function del-master() {
 
     logger info "reconfigure and restart 'ex-lb' service"
     ansible-playbook -i "$BASE/clusters/$1/hosts" "$BASE/playbooks/10.ex-lb.yml" -t restart_lb -e "@clusters/$1/config.yml"
+
+    logger info "delete the master-node: $NODE_NAME"
+    bin/kubectl --kubeconfig="clusters/$1/kubectl.kubeconfig" delete node "$NODE_NAME"
 }
 
 

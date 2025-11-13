@@ -1,12 +1,12 @@
-<img alt="kubeasz-logo" width="320" height="100" src="pics/kubeasz.svg">  <a href="docs/mixes/conformance.md"><img align="right" alt="conformance-icon" width="75" height="100" src="https://www.cncf.io/wp-content/uploads/2020/07/certified_kubernetes_color-1.png"></a>
+<img alt="kubeasz-logo" width="320" height="100" src="docs/pics/kubeasz.svg">  <a href="docs/mixes/conformance.md"><img align="right" alt="conformance-icon" width="75" height="100" src="https://www.cncf.io/wp-content/uploads/2020/07/certified_kubernetes_color-1.png"></a>
 
 **kubeasz** 致力于提供快速部署高可用`k8s`集群的工具, 同时也努力成为`k8s`实践、使用的参考书；基于二进制方式部署和利用`ansible-playbook`实现自动化；既提供一键安装脚本, 也可以根据`安装指南`分步执行安装各个组件。
 
 **kubeasz** 从每一个单独部件组装到完整的集群，提供最灵活的配置能力，几乎可以设置任何组件的任何参数；同时又为集群创建预置一套运行良好的默认配置，甚至自动化创建适合大规模集群的[BGP Route Reflector网络模式](docs/setup/network-plugin/calico-bgp-rr.md)。
 
 - **集群特性** [Master高可用](docs/setup/00-planning_and_overall_intro.md#ha-architecture)、[离线安装](docs/setup/offline_install.md)、[多架构支持(amd64/arm64)](docs/setup/multi_platform.md)
-- **集群版本** kubernetes v1.24, v1.25, v1.26, v1.27, v1.28, v1.29, v1.30, v1.31, v1.32
-- **运行时** [containerd](docs/setup/03-container_runtime.md) v1.7.x, v2.0.x
+- **集群版本** kubernetes v1.24, v1.25, v1.26, v1.27, v1.28, v1.29, v1.30, v1.31, v1.32, v.1.33, v1.34
+- **运行时** [containerd](docs/setup/03-container_runtime.md) v1.7.x, v2.0.x, v2.1.x
 - **网络** [calico](docs/setup/network-plugin/calico.md), [cilium](docs/setup/network-plugin/cilium.md), [flannel](docs/setup/network-plugin/flannel.md), [kube-ovn](docs/setup/network-plugin/kube-ovn.md), [kube-router](docs/setup/network-plugin/kube-router.md)
 
 
@@ -19,15 +19,13 @@
     <tr>
       <td>Kubernetes</td>
       <td>1.23</td>
-      <td>1.24</td>
-      <td>1.25</td>
-      <td>1.26</td>
-      <td>1.27</td>
-      <td>1.28</td>
+      <td>1.24-1.28</td>
       <td>1.29</td>
       <td>1.30</td>
       <td>1.31</td>
       <td>1.32</td>
+      <td>1.33</td>
+      <td>1.34</td>
     </tr>
   </thead>
   <tbody>
@@ -35,14 +33,12 @@
       <td>kubeasz</td>
       <td>3.2.0</td>
       <td>3.6.2</td>
-      <td>3.6.2</td>
-      <td>3.6.2</td>
-      <td>3.6.2</td>
-      <td>3.6.2</td>
       <td>3.6.3</td>
       <td>3.6.4</td>
       <td>3.6.5</td>
       <td>3.6.6</td>
+      <td>3.6.7</td>
+      <td>3.6.8</td>
     </tr>
   </tbody>
 </table>
@@ -56,6 +52,7 @@
 - **Debian** 10, 11([notes](docs/setup/multi_os.md#Debian))
 - **Fedora** 34, 35, 36, 37
 - **Kylin Linux Advanced Server V10** 麒麟V10 Tercel, Lance
+- **openEuler** 22.03 LTS, 24.03 LTS([notes](docs/setup/multi_os.md#openEuler))
 - **openSUSE** Leap 15.x([notes](docs/setup/multi_os.md#openSUSE))
 - **Rocky Linux** 8, 9
 - **Ubuntu** 16.04, 18.04, 20.04, 22.04, 24.04
@@ -92,7 +89,7 @@
         <td><a href="docs/guide/dashboard.md">dashboard</a></td>
         <td><a href="docs/guide/metrics-server.md">metrics-server</a></td>
         <td><a href="docs/guide/prometheus.md">prometheus</a></td>
-        <td><a href="docs/guide/efk.md">efk</a></td>
+        <td><a href="docs/deprecated/efk.md">efk</a></td>
     </tr>
     <tr>
         <td><strong>集群管理</strong><a href="docs/op/op-index.md">+</a></td>
@@ -114,8 +111,8 @@
         <td><strong>周边生态</strong></td>
         <td><a href="docs/guide/harbor.md">harbor</a></td>
         <td><a href="docs/guide/helm.md">helm</a></td>
-        <td><a href="docs/guide/jenkins.md">jenkins</a></td>
-        <td><a href="docs/guide/gitlab/readme.md">gitlab</a></td>
+        <td><a href="docs/deprecated/jenkins.md">jenkins</a></td>
+        <td><a href="docs/deprecated/gitlab/readme.md">gitlab</a></td>
         <td><a href="docs/guide/argocd.md">argocd</a></td>
         <td><a href=""></a></td>
     </tr>
